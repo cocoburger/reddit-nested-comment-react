@@ -13,7 +13,7 @@ export function usePost() {
 
 export function PostProvider({ children }) {
   const { id } = useParams();
-  const { loading, error, value: post } = useAsync(() => getPost(id), [ id ]);
+  const { loading, error, value:post } = useAsync(() => getPost(id), [ id ]);
   
   const [ comments, setComments ] = useState([]);
   
@@ -43,18 +43,38 @@ export function PostProvider({ children }) {
     });
   }
   
+  function updateLocalComment(id, message) {
+    setComments(prevComments => {
+      return prevComments.map(comment => {
+        if (comment.id === id) {
+          return { ...comment, message };
+        } else {
+          return comment;
+        }
+      });
+    });
+  }
+  
+  function deleteLocalComment(id) {
+    setComments((prevComments) => {
+      return prevComments.filter(comment => comment.id !== id);
+    });
+  }
+  
   function getReplies(parentId) {
     return commentsByParentId[parentId];
   }
   
   return (
       <Context.Provider
-          value={ {
-            post: { id, ...post },
-            rootComments: commentsByParentId[null],
+          value={{
+            post:{ id, ...post },
+            rootComments:commentsByParentId[null],
             getReplies,
-            createLocalComment
-          } }>
-        { loading ? (<h1>로딩중입니다....</h1>) : error ? (<h1 className='error-msg'>{ error }</h1>) : (children) }
+            createLocalComment,
+            updateLocalComment,
+            deleteLocalComment
+          }}>
+        {loading ? (<h1>로딩중입니다....</h1>) : error ? (<h1 className='error-msg'>{error}</h1>) : (children)}
       </Context.Provider>);
 }

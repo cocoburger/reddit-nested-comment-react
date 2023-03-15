@@ -1,4 +1,4 @@
-import './App.css';
+import "./styles.css";
 import { Route, Routes } from 'react-router-dom';
 import { Post } from './components/Post';
 import { PostLists } from './components/PostLists';
@@ -10,9 +10,9 @@ function App() {
       <div className='container'>
         <Routes>
           <Route path='/'
-                 element={ <PostLists/> }/>
+                 element={<PostLists/>}/>
           <Route path='/posts/:id'
-                 element={ <PostProvider><Post/></PostProvider> }/>
+                 element={<PostProvider><Post/></PostProvider>}/>
         </Routes>
       </div>
   );
