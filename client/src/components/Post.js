@@ -17,10 +17,6 @@ export function Post() {
     );
   }
   
-  useEffect(() => {
-    console.log(rootComments);
-  }, [ rootComments ]);
-  
   
   return (
       <>

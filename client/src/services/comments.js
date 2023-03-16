@@ -24,3 +24,10 @@ export function deleteComment({ postId, id }) {
     method:'DELETE',
   });
 }
+
+
+export function toggleCommentLiked({ postId, id }) {
+  return makeRequest(`posts/${postId}/comments/${id}/like`, {
+    method:'POST',
+  });
+}
